@@ -6,17 +6,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Ajax Lara</title>
-    <style>
-        body {
-            background-color: lightgray !important;
-        }
-    </style>
+
+    <link rel="stylesheet" href="/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-
     <div class="container" style="margin-top: 50px">
         <div class="row">
             <div class="col-md-12">
@@ -28,31 +24,23 @@
 
                         <table class="table table-bordered table-striped">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>Title</th>
                                     <th>Content</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="table-posts">
-                                @forelse($posts as $post)
+                                @foreach($posts as $post)
                                 <tr id="index_{{ $post->id }}">
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->content }}</td>
-                                    <td class="text-center">
+                                    <td class="text-center" width="15%">
                                         <a href="javascript:void(0)" id="btn-edit-post" data-id="{{ $post->id }}" class="btn btn-primary btn-sm">EDIT</a>
                                         <a href="javascript:void(0)" id="btn-delete-post" data-id="{{ $post->id }}" class="btn btn-danger btn-sm">DELETE</a>
                                     </td>
                                 </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="4" style="background-color: white">
-                                        <div class="alert alert-warning m-0">
-                                            Tidak Ada Posts Disini
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -60,5 +48,6 @@
             </div>
         </div>
     </div>
+    @include('components.modal-create')
 </body>
 </html>
