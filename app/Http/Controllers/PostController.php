@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -41,6 +42,42 @@ class PostController extends Controller
             'success' => true,
             'message' => 'Data Berhasil Disimpan!',
             'data'    => $post
+        ]);
+    }
+
+    public function show(Post $post)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Post',
+            'data' => $post
+        ]);
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        // memfalidasi data
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        // jika data salah
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        // update post
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+
+        // mengembalikan response
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Telah Diupdate',
+            'data' => $post
         ]);
     }
 }
