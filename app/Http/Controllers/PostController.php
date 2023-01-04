@@ -80,4 +80,16 @@ class PostController extends Controller
             'data' => $post
         ]);
     }
+
+    public function destroy($id)
+    {
+        // hapus posts berdasarkan id
+        Post::where('id', $id)->delete();
+
+        // kembalikan response
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhasil Dihapus'
+        ]);
+    }
 }
